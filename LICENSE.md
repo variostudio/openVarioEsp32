@@ -1,0 +1,1 @@
+# openVario is licensed under GPL v3 license
