@@ -1,6 +1,6 @@
 #include "durations.h"
 
-#define SOUND_OUT 27
+#define SOUND_OUT 25
 
 void playTone(float vario) {
   if (vario >= 0.1) {
@@ -13,9 +13,4 @@ void playTone(float vario) {
 
     tone(SOUND_OUT, freq, dur);
   }
-}
-
-void initSoundSystem() {
-  pinMode(SOUND_OUT, OUTPUT);
-  digitalWrite(SOUND_OUT, LOW);
 }

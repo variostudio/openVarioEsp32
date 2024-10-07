@@ -21,7 +21,6 @@ void setup() {
 
   initBMP(current_pressure);
   initDisplay();
-  initSoundSystem();
 
   prev_alt = bmp.readAltitude(current_pressure);
   prev_read_millis = millis();
@@ -37,6 +36,7 @@ void loop() {
     
     save_next_step();
   }
+  noTone(25);
 }
 
 void save_next_step() {
