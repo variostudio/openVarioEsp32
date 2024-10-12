@@ -4,7 +4,7 @@
 #define SCREEN_WIDTH 128  // OLED display width, in pixels
 #define SCREEN_HEIGHT 128 // OLED display height, in pixels
 #define OLED_RESET -1     // can set an oled reset pin if desired
-Adafruit_SH1107 display = Adafruit_SH1107(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET, 1000000, 100000);
+Adafruit_SH1107 display = Adafruit_SH1107(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET, 100000, 100000);
 
 
 void displayData(float alt, float vario, float current_pressure) {
@@ -55,7 +55,7 @@ void displayWelcome() {
 
 void initDisplay() {
   display.begin(0x3C, true);
-
+  
   displayWelcome();
   delay(1000);
 }

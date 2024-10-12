@@ -16,7 +16,8 @@ unsigned long prev_read_millis;
 float vario;
 
 void setup() {
-  setCpuFrequencyMhz(80);
+  setCpuFrequencyMhz(40);
+
   current_pressure = 1013.25;
 
   initBMP(current_pressure);
@@ -36,7 +37,6 @@ void loop() {
     
     save_next_step();
   }
-  noTone(25);
 }
 
 void save_next_step() {
