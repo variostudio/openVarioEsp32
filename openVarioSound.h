@@ -2,7 +2,10 @@
 
 #define SOUND_OUT 25
 
-void playTone(float vario) {
+/**
+  Play tone and return duration
+*/
+int playTone(float vario) {
   if (vario >= 0.1) {
     int freq = 700 + int(10 * vario / 0.1);
     int dur = durations[durations_len-1];
@@ -12,5 +15,7 @@ void playTone(float vario) {
     }    
 
     tone(SOUND_OUT, freq, dur);
+    return dur;
   }
+  return 0;
 }

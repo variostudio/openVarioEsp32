@@ -1,4 +1,4 @@
-/** Simple variometer based on ESP32, BMP280 and I2C oled screen 
+/** Simple variometer based on ESP32, BMPXXX and I2C oled screen 
   Connect ESP32 with periferals via I2C according ESP pin mapping.
 */
 
@@ -7,13 +7,10 @@
 #include "openVarioSound.h"
 #include "openVarioBMP.h"
 
-int dt;
 float prev_alt;
-float alt;
 float current_pressure;
-
+int cycle_delay = 500;
 unsigned long prev_read_millis;
-float vario;
 
 void setup() {
   setCpuFrequencyMhz(40);
@@ -28,21 +25,26 @@ void setup() {
 }
 
 void loop() {
-  dt = millis() - prev_read_millis;
-  if (dt > 500) {
-    alt = bmp.readAltitude(current_pressure);
-    vario = (alt - prev_alt) * 1000 / dt;
-    playTone(vario);
+  int dt = millis() - prev_read_millis;
+  if (dt > 0) {
+    long start = millis();
+    float alt = bmp.readAltitude(current_pressure);
+    float vario = (alt - prev_alt) * 1000 / dt;
+    int dur = playTone(vario);
+    delay(dur);
     displayData(alt, vario, current_pressure);
     
-    save_next_step();
+    save_next_step(alt);  
+    light_sleep(cycle_delay - (millis() - start));
   }
 }
 
-void save_next_step() {
+void light_sleep(int ms) {
+  esp_sleep_enable_timer_wakeup(1000 * ms);
+  esp_light_sleep_start();
+}
+
+void save_next_step(float alt) {
   prev_alt = alt;
   prev_read_millis = millis();
 }
-
-
-
