@@ -14,6 +14,7 @@ unsigned long prev_read_millis;
 
 void setup() {
   setCpuFrequencyMhz(40);
+  Serial.begin(112500);
 
   current_pressure = 1013.25;
 
@@ -31,15 +32,15 @@ void loop() {
     float alt = bmp.readAltitude(current_pressure);
     float vario = (alt - prev_alt) * 1000 / dt;
     int dur = playTone(vario);
-    delay(dur);
     displayData(alt, vario, current_pressure);
-    
     save_next_step(alt);  
     light_sleep(cycle_delay - (millis() - start));
   }
 }
 
 void light_sleep(int ms) {
+  Serial.printf("Sleep for %d ms\n", ms);
+
   esp_sleep_enable_timer_wakeup(1000 * ms);
   esp_light_sleep_start();
 }
